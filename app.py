@@ -2,7 +2,23 @@ import streamlit as st
 import numpy as np
 from PIL import Image
 import time
+import gdown
+import os
 
+def download_model(file_id, output):
+    if not os.path.exists(output):
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, output, quiet=False)
+
+download_model("1CC8SlcYXbwUoZaBgnZhqq9ayqiqyul3U", "cnn_model.h5")
+download_model("16gTy1xiTCqItBSQ8_VoKfBoN9JVhOoBi", "efficientnet_model.h5")
+download_model("1FgQvE3W83CnuLi7xL7pNUkKLBtIdSR1R", "resnet_model.h5")
+
+from tensorflow.keras.models import load_model
+
+cnn_model = load_model("cnn_model.h5")
+eff_model = load_model("efficientnet_model.h5")
+resnet_model = load_model("resnet_model.h5")
 # ── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="FishScan AI · Deteksi Kesegaran Ikan",
